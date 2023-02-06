@@ -107,8 +107,8 @@ CreateDriver::CreateDriver()
   joint_state_msg_.position.resize(2);
   joint_state_msg_.velocity.resize(2);
   joint_state_msg_.effort.resize(2);
-  joint_state_msg_.name[0] = "left_wheel_joint";
-  joint_state_msg_.name[1] = "right_wheel_joint";
+  joint_state_msg_.name[0] = "wheel_left_joint";
+  joint_state_msg_.name[1] = "wheel_right_joint";
 
   // Populate intial covariances
   for (int i = 0; i < 36; i++)
