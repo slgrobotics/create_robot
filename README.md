@@ -1,3 +1,18 @@
+## Updated to work with ROS2 Turtlebot3 codebase and Create 1 base
+
+The idea is to use high level ROBOTIS-GIT Turtlebot3 codebase for Nav2 etc., while using old Create 1 (Roomba 400) platform. Create 2 (or Roomba 500, 600) works fine.
+
+The Create 1 has a firmware bug, preventing reading "angle" value. To compensate for that old Turtlebot and this code uses a gyro, connected to analog input of Create 1 cargo bay. Roombas 500 and 600 doesn't require such fix.
+
+```
+mkdir -p create_robot_ws/src
+cd create_robot_ws/src
+git clone https://github.com/slgrobotics/create_robot.git --branch foxy
+git clone https://github.com/AutonomyLab/libcreate
+```
+
+## ------------------
+
 # create_robot
 
 [ROS](http://ros.org) driver for iRobot [Create 1 and 2](http://www.irobot.com/About-iRobot/STEM/Create-2.aspx).
