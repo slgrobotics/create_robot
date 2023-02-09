@@ -4,11 +4,50 @@ The idea is to use high level ROBOTIS-GIT Turtlebot3 codebase for Nav2 etc., whi
 
 The Create 1 has a firmware bug, preventing reading "angle" value. To compensate for that old Turtlebot and this code uses a gyro, connected to analog input of Create 1 cargo bay. Roombas 500 and 600 doesn't require such fix.
 
+This modified version of Create driver relies on code modifications here: https://github.com/slgrobotics/libcreate
+
+**Note:** to compile this code on Raspberry Pi 3B you need 2GB of swap space. Compilation can take more than an hour.
+
 ```
-mkdir -p create_robot_ws/src
-cd create_robot_ws/src
+mkdir -p ~/create_robot_ws/src
+cd ~/create_robot_ws/src
 git clone https://github.com/slgrobotics/create_robot.git --branch foxy
-git clone https://github.com/AutonomyLab/libcreate
+git clone https://github.com/slgrobotics/libcreate.git
+cd ~/create_robot_ws
+colcon build
+
+source ~/create_robot_ws/install/setup.bash
+ros2 launch my_create_launch.py
+```
+Example *my_create_launch.py*:
+```
+from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='create_driver',
+            namespace='',
+            executable='create_driver',
+            name='create_driver',
+            output='screen',
+            respawn=False,
+            respawn_delay=4,
+            parameters=[{
+                'robot_model': 'CREATE_1',
+                'dev': '/dev/ttyUSB0',
+                'baud': 57600,
+                'base_frame': 'base_footprint',
+                'odom_frame': 'odom',
+                'latch_cmd_duration': 0.5,
+                'loop_hz': 5.0,
+                'publish_tf': True,
+                'gyro_offset': 12.0,
+                'gyro_scale': 1.02
+            }]
+        )
+    ])
 ```
 
 ## ------------------
