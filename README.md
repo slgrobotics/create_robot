@@ -6,6 +6,8 @@ The Create 1 has a firmware bug, preventing reading "angle" value. To compensate
 
 This modified version of Create driver relies on code modifications here: https://github.com/slgrobotics/libcreate
 
+See full setup instructions at https://github.com/slgrobotics/turtlebot_create
+
 **Note:** to compile this code on Raspberry Pi 3B you need 2GB of swap space. Compilation can take more than an hour.
 
 ```
