@@ -133,6 +133,11 @@ private:
   int baud_;
   bool oi_mode_workaround_;
 
+  // A fix to https://github.com/AutonomyLab/create_robot/issues/28
+  //      - reading analog gyro via Create 1 Cargo Bay pin 4:
+  double gyro_offset_;   // around 0, when static gyro produces 512 reading
+  double gyro_scale_;    // around 1, adjust for gyro signal strength
+
   void cmdVelCallback(geometry_msgs::msg::Twist::UniquePtr msg);
   void debrisLEDCallback(std_msgs::msg::Bool::UniquePtr msg);
   void spotLEDCallback(std_msgs::msg::Bool::UniquePtr msg);

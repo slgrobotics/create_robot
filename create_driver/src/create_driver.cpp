@@ -51,6 +51,12 @@ CreateDriver::CreateDriver()
   publish_tf_ = declare_parameter<bool>("publish_tf", true);
   oi_mode_workaround_ = declare_parameter<bool>("oi_mode_workaround", false);
 
+  // A fix to https://github.com/AutonomyLab/create_robot/issues/28
+  gyro_offset_ = declare_parameter<double>("gyro_offset", 0.0);
+  gyro_scale_ = declare_parameter<double>("gyro_scale", 1.0);
+
+  RCLCPP_INFO_STREAM(get_logger(), "[CREATE] gyro_offset: " << gyro_offset_ << "    gyro_scale: " << gyro_scale_);
+
   auto robot_model_name = declare_parameter<std::string>("robot_model", "CREATE_2");
   if (robot_model_name == "ROOMBA_400") {
     model_ = create::RobotModel::ROOMBA_400;
@@ -74,6 +80,9 @@ CreateDriver::CreateDriver()
   // Enable/disable the OI mode reporting workaround in libcreate.
   // https://github.com/AutonomyLab/create_robot/issues/64
   robot_->setModeReportWorkaround(oi_mode_workaround_);
+
+  // A fix to https://github.com/AutonomyLab/create_robot/issues/28
+  robot_->setGyroParameters(gyro_offset_, gyro_scale_);
 
   if (!robot_->connect(dev_, baud_)) {
     RCLCPP_FATAL(get_logger(), "[CREATE] Failed to establish serial connection with Create.");
@@ -104,8 +113,8 @@ CreateDriver::CreateDriver()
   joint_state_msg_.position.resize(2);
   joint_state_msg_.velocity.resize(2);
   joint_state_msg_.effort.resize(2);
-  joint_state_msg_.name[0] = "left_wheel_joint";
-  joint_state_msg_.name[1] = "right_wheel_joint";
+  joint_state_msg_.name[0] = "wheel_left_joint";
+  joint_state_msg_.name[1] = "wheel_right_joint";
 
   // Populate intial covariances
   for (int i = 0; i < 36; i++) {
