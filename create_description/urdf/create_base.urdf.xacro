@@ -2,6 +2,10 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:property name="PI" value="3.1415926535897931" />
 
+  <material name="Green">
+    <color rgba="0 1 0 1"/>
+  </material>
+
   <xacro:macro name="create_wheel" params="prefix y_offset wheel_radius wheel_width">
     <link name="${prefix}_wheel_link">
     <inertial>
