@@ -8,7 +8,7 @@ The Create 1 has a firmware bug, preventing reading "angle" value (https://githu
 
 This modified version of Create driver relies on code modifications here: https://github.com/slgrobotics/libcreate
 
-See full setup instructions at https://github.com/slgrobotics/turtlebot_create
+See full setup instructions at https://github.com/slgrobotics/robots_bringup/tree/main/Docs/Create1 (older version at https://github.com/slgrobotics/turtlebot_create)
 
 **Note:** to compile this code on Raspberry Pi 3B you need at least 2GB of swap space. Compilation can take more than an hour.
 
@@ -64,7 +64,7 @@ Analog gyro signal, as read by Create 1, is expected to be 512 when robot is sta
 
 The turn rate scale, as reported by gyro, usually needs adjustment. You need to drive the robot forward a couple meters and watch odom point in Rviz to stay at the launch point. Then turn the robot (using teleop) and watch the odom point move. Adjust the *gyro_scale* for minimal odom displacement during rotations. 
 
-Once the parameters are adjusted, robot will be able to map the area, and odom point will not move dramatically when the robot drives and turns in any direction.
+Once the parameters are adjusted, robot will be able to map the area, and odom point will not move drastically when the robot drives and turns in any direction.
 
 #### ------------------ end of slgrobotics note --------------------------
 
