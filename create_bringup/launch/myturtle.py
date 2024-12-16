@@ -23,7 +23,8 @@ def generate_launch_description():
                 'gyro_offset': 0.0,
                 'gyro_scale': 1.3
 
-            }]
+            }],
+            remappings=[('cmd_vel', 'diff_cont/cmd_vel'),('odom','diff_cont/odom')]
         ),
         Node(
             package='xv_11_driver',

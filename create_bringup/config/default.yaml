@@ -13,7 +13,7 @@ create_driver:
     odom_frame: "odom"
 
     # Time (s) without receiving a velocity command before stopping the robot
-    latch_cmd_duration: 0.2
+    latch_cmd_duration: 0.5
 
     # Internal loop update rate (Hz)
     loop_hz: 10.0

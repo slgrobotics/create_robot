@@ -123,7 +123,7 @@ CreateDriver::CreateDriver()
   }
 
   // Setup subscribers
-  cmd_vel_sub_ = create_subscription<geometry_msgs::msg::Twist>(
+  cmd_vel_sub_ = create_subscription<geometry_msgs::msg::TwistStamped>(
     "cmd_vel", 1, std::bind(&CreateDriver::cmdVelCallback, this, std::placeholders::_1));
   debris_led_sub_ = create_subscription<std_msgs::msg::Bool>(
     "debris_led", 10, std::bind(&CreateDriver::debrisLEDCallback, this, std::placeholders::_1));
@@ -198,10 +198,11 @@ CreateDriver::~CreateDriver()
   delete robot_;
 }
 
-void CreateDriver::cmdVelCallback(geometry_msgs::msg::Twist::UniquePtr msg)
+void CreateDriver::cmdVelCallback(geometry_msgs::msg::TwistStamped::UniquePtr msg)
 {
-  robot_->drive(msg->linear.x, msg->angular.z);
-  last_cmd_vel_time_ = now();
+  last_cmd_vel_time_ = msg->header.stamp;
+  robot_->drive(msg->twist.linear.x, msg->twist.angular.z);
+  //last_cmd_vel_time_ = now();
 }
 
 void CreateDriver::debrisLEDCallback(std_msgs::msg::Bool::UniquePtr msg)

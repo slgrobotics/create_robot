@@ -42,7 +42,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "diagnostic_updater/diagnostic_updater.hpp"
 #include "geometry_msgs/msg/transform_stamped.hpp"
-#include "geometry_msgs/msg/twist.hpp"
+#include "geometry_msgs/msg/twist_stamped.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joint_state.hpp"
@@ -67,7 +67,7 @@ private:
   create::Create* robot_;
   create::RobotModel model_;
 
-  rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
+  rclcpp::Subscription<geometry_msgs::msg::TwistStamped>::SharedPtr cmd_vel_sub_;
   rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr debris_led_sub_;
   rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr spot_led_sub_;
   rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr dock_led_sub_;
@@ -138,7 +138,7 @@ private:
   double gyro_offset_;   // around 0, when static gyro produces 512 reading
   double gyro_scale_;    // around 1, adjust for gyro signal strength
 
-  void cmdVelCallback(geometry_msgs::msg::Twist::UniquePtr msg);
+  void cmdVelCallback(geometry_msgs::msg::TwistStamped::UniquePtr msg);
   void debrisLEDCallback(std_msgs::msg::Bool::UniquePtr msg);
   void spotLEDCallback(std_msgs::msg::Bool::UniquePtr msg);
   void dockLEDCallback(std_msgs::msg::Bool::UniquePtr msg);
