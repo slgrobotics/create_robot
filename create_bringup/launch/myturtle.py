@@ -15,7 +15,7 @@ def generate_launch_description():
                 'robot_model': 'CREATE_1',
                 'dev': '/dev/ttyUSB0',
                 'baud': 57600,
-                'base_frame': 'base_footprint',
+                'base_frame': 'base_link',
                 'odom_frame': 'odom',
                 'latch_cmd_duration': 0.5,
                 'loop_hz': 5.0,
@@ -37,7 +37,7 @@ def generate_launch_description():
             parameters=[{
                 'port': '/dev/ttyACM0',
                 'baud_rate': 115200,
-                'frame_id': 'base_scan',
+                'frame_id': 'laser_frame',
                 'firmware_version': 2,
             }]
         ),

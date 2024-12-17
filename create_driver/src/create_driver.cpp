@@ -44,7 +44,7 @@ CreateDriver::CreateDriver()
   latch_duration_(std::chrono::nanoseconds{0})
 {
   dev_ = declare_parameter<std::string>("dev", "/dev/ttyUSB0");
-  base_frame_ = declare_parameter<std::string>("base_frame", "base_footprint");
+  base_frame_ = declare_parameter<std::string>("base_frame", "base_link");
   odom_frame_ = declare_parameter<std::string>("odom_frame", "odom");
   latch_duration_ = rclcpp::Duration::from_seconds(declare_parameter<double>("latch_cmd_duration", 0.2));
   loop_hz_ = declare_parameter<double>("loop_hz", 10.0);
