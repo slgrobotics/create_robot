@@ -1,6 +1,10 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
+#
+# This file goes to ~/launch folder on Create 1 Turtlebot Raspberry Pi
+#
+
 def generate_launch_description():
 
     create_driver_node = Node(
@@ -19,7 +23,7 @@ def generate_launch_description():
             'odom_frame': 'odom',
             'latch_cmd_duration': 0.5,
             'loop_hz': 5.0,
-            'publish_tf': True,
+            'publish_tf': False,
             'gyro_offset': 0.0,
             'gyro_scale': 1.3
 
