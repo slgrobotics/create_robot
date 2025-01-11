@@ -54,8 +54,9 @@ CreateDriver::CreateDriver()
   // A fix to https://github.com/AutonomyLab/create_robot/issues/28
   gyro_offset_ = declare_parameter<double>("gyro_offset", 0.0);
   gyro_scale_ = declare_parameter<double>("gyro_scale", 1.0);
+  distance_scale_ = declare_parameter<double>("distance_scale", 1.0);
 
-  RCLCPP_INFO_STREAM(get_logger(), "[CREATE] gyro_offset: " << gyro_offset_ << "    gyro_scale: " << gyro_scale_);
+  RCLCPP_INFO_STREAM(get_logger(), "[CREATE] gyro_offset: " << gyro_offset_ << "    gyro_scale: " << gyro_scale_ << "    distance_scale: " << distance_scale_);
 
   auto robot_model_name = declare_parameter<std::string>("robot_model", "CREATE_2");
   if (robot_model_name == "ROOMBA_400") {
@@ -70,7 +71,7 @@ CreateDriver::CreateDriver()
     return;
   }
 
-  RCLCPP_INFO_STREAM(get_logger(), "[CREATE] \"" << robot_model_name << "\" selected");
+  RCLCPP_INFO_STREAM(get_logger(), "[CREATE] \"" << robot_model_name << "\" base model selected");
 
   baud_ = declare_parameter<int>("baud", model_.getBaud());
 
@@ -83,6 +84,8 @@ CreateDriver::CreateDriver()
 
   // A fix to https://github.com/AutonomyLab/create_robot/issues/28
   robot_->setGyroParameters(gyro_offset_, gyro_scale_);
+  // Adjust for wheels odometry distance errors: 
+  robot_->setDistanceParameters(distance_scale_);
 
   if (!robot_->connect(dev_, baud_)) {
     RCLCPP_FATAL(get_logger(), "[CREATE] Failed to establish serial connection with Create.");

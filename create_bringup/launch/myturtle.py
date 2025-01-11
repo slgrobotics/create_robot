@@ -25,8 +25,8 @@ def generate_launch_description():
             'loop_hz': 5.0,
             'publish_tf': False,
             'gyro_offset': 0.0,
-            'gyro_scale': 1.3
-
+            'gyro_scale': 1.3,
+            'distance_scale': 1.07
         }],
         remappings=[('cmd_vel', 'diff_cont/cmd_vel'),('odom','diff_cont/odom')]
     )

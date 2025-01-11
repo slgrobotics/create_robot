@@ -137,6 +137,7 @@ private:
   //      - reading analog gyro via Create 1 Cargo Bay pin 4:
   double gyro_offset_;   // around 0, when static gyro produces 512 reading
   double gyro_scale_;    // around 1, adjust for gyro signal strength
+  double distance_scale_;  // around 1, adjust for wheels odometry error
 
   void cmdVelCallback(geometry_msgs::msg::TwistStamped::UniquePtr msg);
   void debrisLEDCallback(std_msgs::msg::Bool::UniquePtr msg);
