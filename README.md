@@ -57,17 +57,7 @@ def generate_launch_description():
 
 ## Tuning gyro_offset and gyro_scale
 
-You need to bring up Rviz2 to see wheel joints rotating on a map. The best way I found was to follow setup all the way to running Cartographer:
-
-https://github.com/slgrobotics/turtlebot_create
-
-Analog gyro signal, as read by Create 1, is expected to be 512 when robot is stationary. If it differs (say, 202 when robot doesn't move) - *gyro_offset* compensates for that (say, 512-202=310). Adjust it till wheel joints do not move.
-
-The turn rate scale, as reported by gyro, usually needs adjustment. You need to drive the robot forward a couple meters and watch odom point in Rviz to stay at the launch point. Then turn the robot (using teleop) and watch the odom point move. Adjust the *gyro_scale* for minimal odom displacement during rotations.
-
-Adjust the *distance_scale* to compensate for systematic error if your robot reports wrong distance on a straight run.
-
-Once the parameters are adjusted, robot will be able to map the area, and odom point will not move drastically when the robot drives and turns in any direction.
+Follow this guide: https://github.com/slgrobotics/robots_bringup/blob/main/Docs/Create1/README.md#tuning-your-gyro-only-for-create-1
 
 Odometry calculations: see ~/robot_ws/src/libcreate/src/create.cpp : 135
 
