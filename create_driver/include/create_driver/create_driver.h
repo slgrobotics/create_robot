@@ -45,6 +45,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "geometry_msgs/msg/twist_stamped.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 #include "rclcpp/rclcpp.hpp"
+#include "sensor_msgs/msg/battery_state.hpp"
 #include "sensor_msgs/msg/joint_state.hpp"
 #include "std_msgs/msg/bool.hpp"
 #include "std_msgs/msg/empty.hpp"
@@ -89,13 +90,16 @@ private:
   rclcpp::Publisher<std_msgs::msg::Empty>::SharedPtr min_btn_pub_;
   rclcpp::Publisher<std_msgs::msg::Empty>::SharedPtr dock_btn_pub_;
   rclcpp::Publisher<std_msgs::msg::Empty>::SharedPtr spot_btn_pub_;
+  /*
   rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr voltage_pub_;
   rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr current_pub_;
   rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr charge_pub_;
   rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr charge_ratio_pub_;
   rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr capacity_pub_;
   rclcpp::Publisher<std_msgs::msg::Int16>::SharedPtr temperature_pub_;
+  */
   rclcpp::Publisher<create_msgs::msg::ChargingState>::SharedPtr charging_state_pub_;
+  rclcpp::Publisher<sensor_msgs::msg::BatteryState>::SharedPtr battery_state_pub_;
   rclcpp::Publisher<std_msgs::msg::UInt16>::SharedPtr omni_char_pub_;
   rclcpp::Publisher<create_msgs::msg::Mode>::SharedPtr mode_pub_;
   rclcpp::Publisher<create_msgs::msg::Bumper>::SharedPtr bumper_pub_;
@@ -110,6 +114,7 @@ private:
   diagnostic_updater::Updater diagnostics_;
 
   create_msgs::msg::Mode mode_msg_;
+  sensor_msgs::msg::BatteryState battery_state_msg_;
   create_msgs::msg::ChargingState charging_state_msg_;
   create_msgs::msg::Bumper bumper_msg_;
   create_msgs::msg::Cliff cliff_msg_;

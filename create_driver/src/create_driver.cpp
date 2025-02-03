@@ -163,13 +163,16 @@ CreateDriver::CreateDriver()
   min_btn_pub_ = create_publisher<std_msgs::msg::Empty>("minute_button", 30);
   dock_btn_pub_ = create_publisher<std_msgs::msg::Empty>("dock_button", 30);
   spot_btn_pub_ = create_publisher<std_msgs::msg::Empty>("spot_button", 30);
+  /*
   voltage_pub_ = create_publisher<std_msgs::msg::Float32>("battery/voltage", 30);
   current_pub_ = create_publisher<std_msgs::msg::Float32>("battery/current", 30);
   charge_pub_ = create_publisher<std_msgs::msg::Float32>("battery/charge", 30);
   charge_ratio_pub_ = create_publisher<std_msgs::msg::Float32>("battery/charge_ratio", 30);
   capacity_pub_ = create_publisher<std_msgs::msg::Float32>("battery/capacity", 30);
   temperature_pub_ = create_publisher<std_msgs::msg::Int16>("battery/temperature", 30);
+  */
   charging_state_pub_ = create_publisher<create_msgs::msg::ChargingState>("battery/charging_state", 30);
+  battery_state_pub_ = create_publisher<sensor_msgs::msg::BatteryState>("battery/battery_state", 30);
   omni_char_pub_ = create_publisher<std_msgs::msg::UInt16>("ir_omni", 30);
   mode_pub_ = create_publisher<create_msgs::msg::Mode>("mode", 30);
   bumper_pub_ = create_publisher<create_msgs::msg::Bumper>("bumper", 30);
@@ -517,6 +520,7 @@ void CreateDriver::publishJointState()
 
 void CreateDriver::publishBatteryInfo()
 {
+  /*
   float32_msg_.data = robot_->getVoltage();
   voltage_pub_->publish(float32_msg_);
   float32_msg_.data = robot_->getCurrent();
@@ -529,6 +533,45 @@ void CreateDriver::publishBatteryInfo()
   temperature_pub_->publish(int16_msg_);
   float32_msg_.data = robot_->getBatteryCharge() / robot_->getBatteryCapacity();
   charge_ratio_pub_->publish(float32_msg_);
+  */
+
+  /* https://docs.ros2.org/foxy/api/sensor_msgs/msg/BatteryState.html
+
+  float voltage
+  float temperature
+  float current
+  float charge
+  float capacity
+  float design_capacity
+  float percentage
+  uint8 power_supply_status
+  uint8 power_supply_health
+  uint8 power_supply_technology
+  boolean present
+  float[] cell_voltage
+  float[] cell_temperature
+  string location
+  string serial_number
+  */
+
+  battery_state_msg_.header.stamp = now();
+
+  battery_state_msg_.voltage = robot_->getVoltage();
+  battery_state_msg_.temperature = robot_->getTemperature();
+  battery_state_msg_.current = robot_->getCurrent();
+  battery_state_msg_.charge = robot_->getBatteryCharge();
+  battery_state_msg_.capacity = robot_->getBatteryCapacity();
+  battery_state_msg_.design_capacity = robot_->getBatteryCapacity();
+  battery_state_msg_.percentage = 100.0f * robot_->getBatteryCharge() / robot_->getBatteryCapacity();
+  battery_state_msg_.power_supply_status = battery_state_msg_.POWER_SUPPLY_STATUS_UNKNOWN; // 0  (POWER_SUPPLY_STATUS_NOT_CHARGING=3)
+  battery_state_msg_.power_supply_health = battery_state_msg_.POWER_SUPPLY_HEALTH_GOOD; // 1
+  battery_state_msg_.power_supply_technology = battery_state_msg_.POWER_SUPPLY_TECHNOLOGY_LION; // 2
+  battery_state_msg_.present = true;
+  //battery_state_msg_.cell_voltage = [4.2, 4.2, 4.2];
+  battery_state_msg_.location = "Create 1 Robot";
+  battery_state_msg_.serial_number = "0001";
+
+  battery_state_pub_->publish(battery_state_msg_);
 
   const create::ChargingState charging_state = robot_->getChargingState();
   charging_state_msg_.header.stamp = now();
