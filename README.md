@@ -1,59 +1,19 @@
 #### ------------------ slgrobotics note --------------------------
 
-## AutonomyLab code - updated to work with ROS2 Turtlebot3 codebase and Create 1 base
+## AutonomyLab code - updated to work with ROS2 Jazzy *Articubot_one codebase* and *Create 1 base*
 
-The idea is to use high level ROBOTIS-GIT Turtlebot3 codebase for Nav2 etc., while using old Create 1 (Roomba 400) platform. Create 2 (or Roomba 500, 600) works fine.
+The idea is to use high level https://github.com/slgrobotics/articubot_one codebase for Nav2 etc., while using old _Create 1 (Roomba 400)_ platform. _Create 2 (or Roomba 500, 600)_ should also work.
 
-The Create 1 has a firmware bug, preventing reading "angle" value (https://github.com/AutonomyLab/create_robot/issues/28). To compensate for that old Turtlebot and this code uses a gyro, connected to analog input of Create 1 cargo bay. Roombas 500 and 600 doesn't require such fix.
+The _Create 1_ base has a firmware bug, preventing reading "_angle_" value: [Issue28](https://github.com/AutonomyLab/create_robot/issues/28). To compensate for that, the old Turtlebot and this code use a gyro, connected to analog input of _Create 1_ cargo bay. _Roomba 500_ and _600_ doesn't require such fix.
 
-This modified version of Create driver relies on code modifications here: https://github.com/slgrobotics/libcreate
+This modified version of _Create driver_ relies on code modifications here: https://github.com/slgrobotics/libcreate
 
-See full setup instructions at https://github.com/slgrobotics/robots_bringup/tree/main/Docs/Create1 (older version at https://github.com/slgrobotics/turtlebot_create)
+See full setup instructions at https://github.com/slgrobotics/robots_bringup/tree/main/Docs/Create1 (older/obsolete version is still at https://github.com/slgrobotics/turtlebot_create)
 
-**Note:** to compile this code on Raspberry Pi 3B you need at least 2GB of swap space. Compilation can take more than an hour.
-
-```
-mkdir -p ~/create_robot_ws/src
-cd ~/create_robot_ws/src
-git clone https://github.com/slgrobotics/create_robot.git
-git clone https://github.com/slgrobotics/libcreate.git
-cd ~/create_robot_ws
-colcon build
-
-source ~/create_robot_ws/install/setup.bash
-ros2 launch my_create_launch.py
-```
-Example *my_create_launch.py*:
-```
-from launch import LaunchDescription
-from launch_ros.actions import Node
-
-def generate_launch_description():
-    return LaunchDescription([
-        Node(
-            package='create_driver',
-            namespace='',
-            executable='create_driver',
-            name='create_driver',
-            output='screen',
-            respawn=False,
-            respawn_delay=4,
-            parameters=[{
-                'robot_model': 'CREATE_1',
-                'dev': '/dev/ttyUSB0',
-                'baud': 57600,
-                'base_frame': 'base_footprint',
-                'odom_frame': 'odom',
-                'latch_cmd_duration': 0.5,
-                'loop_hz': 5.0,
-                'publish_tf': False,
-                'gyro_offset': 0.0,
-                'gyro_scale': 1.3,
-                'distance_scale': 1.07
-            }]
-        )
-    ])
-```
+**Note:** 
+1. This version publishes _sensor_msgs::msg::BatteryState_ ROS2 message instead of legacy battery-related Create messages.
+  
+2. To compile this code on _Raspberry Pi 3B_ you need at least 2GB of swap space. Compilation can take more than 14 hours. Newer RPi's compile this code in minutes. Refer to https://github.com/slgrobotics/robots_bringup/tree/main/Docs/Create1
 
 ## Tuning gyro_offset and gyro_scale
 
