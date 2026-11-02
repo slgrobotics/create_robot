@@ -1,12 +1,16 @@
 #### ------------------ slgrobotics note --------------------------
 
-## AutonomyLab code - updated to work with ROS2 Jazzy *Articubot_one codebase* and *Create 1 base*
+## AutonomyLab code - updated to work with ROS2
 
-The idea is to use high level https://github.com/slgrobotics/articubot_one codebase for Nav2 etc., while using old _Create 1 (Roomba 400)_ platform. _Create 2 (or Roomba 500, 600)_ should also work.
+- works with Jazzy and Lyrical releases
+- works with *[Articubot_one codebase](https://github.com/slgrobotics/articubot_one)* and *Create 1 base*
 
-The _Create 1_ base has a firmware bug, preventing reading "_angle_" value: [Issue28](https://github.com/AutonomyLab/create_robot/issues/28). To compensate for that, the old Turtlebot and this code use a gyro, connected to analog input of _Create 1_ cargo bay. _Roomba 500_ and _600_ doesn't require such fix.
+The idea is to use high level articubot_one codebase for Nav2 etc., while using old _Create 1 (Roomba 400)_ platform. _Create 2 (or Roomba 500, 600)_ should also work.
 
-This modified version of _Create driver_ relies on code modifications here: https://github.com/slgrobotics/libcreate
+> The _Create 1_ base has a firmware bug, preventing reading "_angle_" value: [Issue28](https://github.com/AutonomyLab/create_robot/issues/28).
+> To compensate for that, the old Turtlebot and this code use a gyro, connected to analog input of _Create 1_ cargo bay. _Roomba 500_ and _600_ doesn't require such fix.
+
+This modified version of _Create driver_ relies on code modifications in the [libcreate library](https://github.com/slgrobotics/libcreate)
 
 See full setup instructions at https://github.com/slgrobotics/robots_bringup/tree/main/Docs/Create1 (older/obsolete version is still at https://github.com/slgrobotics/turtlebot_create)
 
