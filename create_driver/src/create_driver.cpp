@@ -37,7 +37,8 @@ POSSIBILITY OF SUCH DAMAGE.
 CreateDriver::CreateDriver()
 : Node("create_driver"),
   model_(create::RobotModel::CREATE_2),
-  tf_broadcaster_(this),
+  tf_broadcaster_(tf2_ros::TransformBroadcaster::RequiredInterfaces(
+      get_node_parameters_interface(), get_node_topics_interface())),
   diagnostics_(this),
   last_cmd_vel_time_(0),
   is_running_slowly_(false),
